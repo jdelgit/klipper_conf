@@ -1,6 +1,6 @@
 # K1C
 # Printer_size: 220x220x250
-# Version: v2.0.6
+# Version: v2.0.5
 # CreateDate: 2023/09/05
 # Nozzle_mcu: chip: GD32F303CBT6
 #             version: CR-K1-MAX-NOZZLE-V1.2.0
@@ -9,9 +9,16 @@
 # mcu: chip: GD32F303RET6
 #      version: CR4CU220812S12
 
+[virtual_pins]
 [include sensorless.cfg]
 [include gcode_macro.cfg]
 [include printer_params.cfg]
+[include Helper-Script/git-backup.cfg]
+[include Helper-Script/useful-macros.cfg]
+[include Helper-Script/improved-shapers/improved-shapers.cfg]
+[include Helper-Script/nozzle-cleaning-fan-control.cfg]
+[include Helper-Script/buzzer-support.cfg]
+[include Helper-Script/KAMP/KAMP_Settings.cfg]
 
 [mcu]
 serial: /dev/ttyS7
@@ -239,8 +246,8 @@ pin: multi_pin:heater_fans
 heater: extruder
 heater_temp: 40
 
-[output_pin my_fan_output_pins]
-pin: nozzle_mcu: PB6
+[static_digital_output my_fan_output_pins]
+pins: nozzle_mcu: PB6
 
 [output_pin fan0]
 pin: !nozzle_mcu: PB8
@@ -297,8 +304,8 @@ step_base: 2
 z_offset: 0 
 noz_ex_com: 0.06
 tilt_corr_dis: 0
-tri_min_hold: 2500
-tri_max_hold: 6000
+tri_min_hold: 2500,20000
+tri_max_hold: 6000,60000
 pres_cnt: 4
 pres0_clk_pins: leveling_mcu:PA5
 pres0_sdo_pins: leveling_mcu:PA1
